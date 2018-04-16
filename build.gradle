@@ -1,0 +1,61 @@
+group 'HobbyStudent'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "io.spring.dependency-management"
+apply plugin: "war"
+
+
+ext.wildflyVersion = "12.0.0.Final"
+ext.javaeeVersion  ="8.0"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+buildscript {
+    ext.springBootVersion = "1.5.2.RELEASE"
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    }
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.wildfly.bom:wildfly-javaee7-with-tools:$wildflyVersion"
+    }
+}
+
+dependencies{
+    compileOnly "javax:javaee-api:$javaeeVersion"
+}
+
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.196'
+
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'javax.faces:jsf-api:2.0'
+//    compile 'gs-rest-service-cors:0.1.0'
+
+//    compile 'com.sun.faces:jsf-api:2.2.9'
+//    compile 'com.sun.faces:jsf-impl:2.2.9'
+//    compile 'jstl:jstl:1.2'
+//    compile 'org.hibernate:hibernate-core:4.3.6.Final'
+    compile 'mysql:mysql-connector-java:5.1.31'
+
+}
+
+jar {
+    baseName = 'gs-rest-service-cors'
+    version =  '0.1.0'
+}
